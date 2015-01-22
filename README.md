@@ -1,2 +1,2 @@
 # jsonm
-pyhon object &lt;-> json + redis = jsonm
+pyhon object to (json + redis)

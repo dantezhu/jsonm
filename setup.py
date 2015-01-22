@@ -9,5 +9,5 @@ setup(
     license="MIT",
     author="dantezhu",
     author_email="dantezhu@qq.com",
-    description="pyhon object <-> json + redis = jsonm",
+    description="pyhon object to (json + redis)",
 )
