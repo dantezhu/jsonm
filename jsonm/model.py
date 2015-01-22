@@ -5,8 +5,8 @@ from .fields import BaseField
 
 class Model(object):
 
-    # 类变量
-    custom_classes = dict()
+    # 类变量，存储继承出来的Model定义
+    model_defines = dict()
 
     # 存储的前缀
     __prefix__ = None
@@ -15,7 +15,7 @@ class Model(object):
         for attr, field_def in self._fields_dict().items():
             setattr(self, attr, field_def.default)
 
-        self.__class__.custom_classes[self.__class__.__name__] = self.__class__
+        self.__class__.model_defines[self.__class__.__name__] = self.__class__
 
     def to_json(self):
         """

@@ -5,7 +5,7 @@ from .model import Model
 
 
 def custom_dumps(python_object):
-    if isinstance(python_object, tuple(Model.custom_classes.values())):
+    if isinstance(python_object, tuple(Model.model_defines.values())):
         return python_object.to_json()
 
     # print python_object
@@ -14,7 +14,7 @@ def custom_dumps(python_object):
 
 def custom_loads(json_object):
     if '__class__' in json_object:
-        obj = Model.custom_classes[json_object['__class__']]()
+        obj = Model.model_defines[json_object['__class__']]()
         obj.from_json(json_object)
         return obj
 
