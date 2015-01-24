@@ -63,7 +63,7 @@ class Model(object):
 
         for attr, field_def in self._fields_dict().items():
             if not field_def.null and getattr(self, attr, None) is None:
-                raise TypeError('%s should not be None' % attr)
+                raise ValueError('%s.%s should not be None' % (self.__class__.__name__, attr))
 
     @classmethod
     def load(cls, rds, id):
