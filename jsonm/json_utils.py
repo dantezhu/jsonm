@@ -6,7 +6,7 @@ from .model import Model
 
 def custom_dumps(python_object):
     if isinstance(python_object, tuple(Model.model_defines.values())):
-        return python_object.to_json()
+        return python_object._to_json()
 
     # print python_object
     raise TypeError(repr(python_object) + ' is not JSON serializable')
@@ -15,7 +15,7 @@ def custom_dumps(python_object):
 def custom_loads(json_object):
     if '__class__' in json_object:
         obj = Model.model_defines[json_object['__class__']]()
-        obj.from_json(json_object)
+        obj._from_json(json_object)
         return obj
 
     return json_object

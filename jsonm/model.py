@@ -17,7 +17,7 @@ class Model(object):
 
         self.__class__.model_defines[self.__class__.__name__] = self.__class__
 
-    def to_json(self):
+    def _to_json(self):
         """
         导出为json
         :return:
@@ -33,7 +33,7 @@ class Model(object):
             __value__=value
         )
 
-    def from_json(self, json_str):
+    def _from_json(self, json_str):
         """
         从json解析
         :param json_str:
