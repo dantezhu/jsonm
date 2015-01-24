@@ -17,7 +17,7 @@ class Model(object):
         导出为json
         :return:
         """
-        self._validate()
+        self.validate()
 
         value = dict()
         for attr in self._fields_dict().keys():
@@ -55,7 +55,7 @@ class Model(object):
 
         return fields_dict
 
-    def _validate(self):
+    def validate(self):
         """
         验证参数是否合法
         :return:
