@@ -5,17 +5,12 @@ from .fields import BaseField
 
 class Model(object):
 
-    # 类变量，存储继承出来的Model定义
-    model_defines = dict()
-
     # 存储的前缀
     __prefix__ = None
 
     def __init__(self):
         for attr, field_def in self._fields_dict().items():
             setattr(self, attr, field_def.default)
-
-        self.__class__.model_defines[self.__class__.__name__] = self.__class__
 
     def _to_json(self):
         """
@@ -78,7 +73,7 @@ class Model(object):
         :param id:
         :return:
         """
-        from .json_utils import json_loads
+        from .utils import json_loads
 
         key = '%s:%s' % (cls.__prefix__ or cls.__name__, id)
 
@@ -88,7 +83,7 @@ class Model(object):
             return None
 
     def save(self, rds):
-        from .json_utils import json_dumps
+        from .utils import json_dumps
 
         key = '%s:%s' % (self.__class__.__prefix__ or self.__class__.__name__, self.id)
 
@@ -98,6 +93,6 @@ class Model(object):
             return None
 
     def __str__(self):
-        from .json_utils import json_dumps
+        from .utils import json_dumps
 
         return json_dumps(self, indent=4)

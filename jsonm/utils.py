@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import json
-from .model import Model
+
+
+# 被定义过的models
+defined_models = dict()
 
 
 def custom_dumps(python_object):
-    if isinstance(python_object, tuple(Model.model_defines.values())):
+    if isinstance(python_object, tuple(defined_models.values())):
         return python_object._to_json()
 
     # print python_object
@@ -14,7 +17,7 @@ def custom_dumps(python_object):
 
 def custom_loads(json_object):
     if '__class__' in json_object:
-        obj = Model.model_defines[json_object['__class__']]()
+        obj = defined_models[json_object['__class__']]()
         obj._from_json(json_object)
         return obj
 
@@ -35,3 +38,9 @@ def json_loads(*args, **kwargs):
     ))
 
     return json.loads(*args, **kwargs)
+
+
+def register_models(models):
+    defined_models.update(
+        dict([(model.__class__.__name__, model) for model in models])
+    )
