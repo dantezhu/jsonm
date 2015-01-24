@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+from jsonm import register_models
 from desk import Desk
 from player import Player
 from vals import rds
 
 
 def main():
+    register_models((Desk, Player))
 
     desk = Desk(2)
     desk.current_uin = 3

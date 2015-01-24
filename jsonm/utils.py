@@ -42,5 +42,5 @@ def json_loads(*args, **kwargs):
 
 def register_models(models):
     defined_models.update(
-        dict([(model.__class__.__name__, model) for model in models])
+        dict([(model.__name__, model) for model in models])
     )
