@@ -5,9 +5,6 @@ from .fields import BaseField
 
 class Model(object):
 
-    # 存储的前缀
-    __prefix__ = None
-
     def __init__(self):
         for attr, field_def in self._fields_dict().items():
             setattr(self, attr, field_def.default)
@@ -64,27 +61,6 @@ class Model(object):
         for attr, field_def in self._fields_dict().items():
             if not field_def.null and getattr(self, attr, None) is None:
                 raise ValueError('%s.%s should not be None' % (self.__class__.__name__, attr))
-
-    @classmethod
-    def load(cls, rds, id):
-        """
-        从存储里读入
-        :param rds:
-        :param id:
-        :return:
-        """
-        from .utils import json_loads
-
-        key = '%s:%s' % (cls.__prefix__ or cls.__name__, id)
-
-        return json_loads(rds.get(key))
-
-    def save(self, rds):
-        from .utils import json_dumps
-
-        key = '%s:%s' % (self.__class__.__prefix__ or self.__class__.__name__, self.id)
-
-        return rds.set(key, json_dumps(self))
 
     def __str__(self):
         from .utils import json_dumps

@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from jsonm import Field, Model
+from jsonm import Field
+from xmodel import XModel
 
 
-class Desk(Model):
+class Desk(XModel):
 
     __prefix__ = 'desk'
 

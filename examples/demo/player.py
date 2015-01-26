@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from jsonm import Model, Field
+from jsonm import Field
+from xmodel import XModel
 
 
-class Player(Model):
+class Player(XModel):
     id = Field()
     nick = Field()
 
