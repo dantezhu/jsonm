@@ -77,20 +77,14 @@ class Model(object):
 
         key = '%s:%s' % (cls.__prefix__ or cls.__name__, id)
 
-        try:
-            return json_loads(rds.get(key))
-        except:
-            return None
+        return json_loads(rds.get(key))
 
     def save(self, rds):
         from .utils import json_dumps
 
         key = '%s:%s' % (self.__class__.__prefix__ or self.__class__.__name__, self.id)
 
-        try:
-            return rds.set(key, json_dumps(self))
-        except:
-            return None
+        return rds.set(key, json_dumps(self))
 
     def __str__(self):
         from .utils import json_dumps
