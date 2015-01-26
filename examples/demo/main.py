@@ -3,7 +3,9 @@
 from jsonm import register_models
 from desk import Desk
 from player import Player
-from vals import rds
+from redis import StrictRedis
+
+rds = StrictRedis()
 
 
 def main():
