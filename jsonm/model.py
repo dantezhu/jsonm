@@ -59,8 +59,10 @@ class Model(object):
         """
 
         for attr, field_def in self._fields_dict().items():
-            if not field_def.null and getattr(self, attr, None) is None:
-                raise ValueError('%s.%s should not be None' % (self.__class__.__name__, attr))
+            try:
+                field_def.validate(getattr(self, attr, None))
+            except Exception, e:
+                raise ValueError('%s.%s validate fail. %s' % (self.__class__.__name__, attr, e.message))
 
     def __str__(self):
         from .utils import json_dumps

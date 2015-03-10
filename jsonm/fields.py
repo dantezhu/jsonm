@@ -11,6 +11,10 @@ class BaseField(object):
         self.default = copy.deepcopy(default)
         self.null = null
 
+    def validate(self, value):
+        if not self.null and value is None:
+            raise ValueError('should not be None')
+
 
 class Field(BaseField):
     """
