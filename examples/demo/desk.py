@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from jsonm import Field
+from jsonm import Field, DateTimeField, DateField, TimeField
 from xmodel import XModel
+import datetime
 
 
 class Desk(XModel):
@@ -11,6 +12,9 @@ class Desk(XModel):
     id = Field()
     current_uin = Field(default=-1)
     players = Field(default=[None for it in xrange(0, 5)])
+    datetime = DateTimeField(default=datetime.datetime.now)
+    date = DateField()
+    time = TimeField()
 
     def __init__(self, id=None):
         super(Desk, self).__init__()

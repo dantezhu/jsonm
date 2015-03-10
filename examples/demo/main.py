@@ -2,6 +2,7 @@
 
 import sys
 sys.path.insert(0, '../../')
+import datetime
 from jsonm import register_models
 from desk import Desk
 from player import Player
@@ -13,8 +14,10 @@ rds = StrictRedis()
 def main():
     register_models((Desk, Player))
 
-    desk = Desk(2)
+    desk = Desk(5)
     desk.current_uin = 1
+    desk.date = datetime.datetime.now().date()
+    desk.time = datetime.datetime.now().time()
     desk.players[0] = Player(0, 'dante0')
     desk.players[1] = Player(1, 'dante1')
     desk.players[2] = Player(2, 'dante2')
@@ -25,7 +28,7 @@ def main():
 
     desk.save(rds)
 
-    desk = Desk.load(rds, 2)
+    desk = Desk.load(rds, 5)
 
     print 'desk:', desk
 

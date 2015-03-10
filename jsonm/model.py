@@ -7,7 +7,7 @@ class Model(object):
 
     def __init__(self):
         for attr, field_def in self._fields_dict().items():
-            setattr(self, attr, field_def.default)
+            setattr(self, attr, field_def.get_default())
 
     def to_json(self):
         """
