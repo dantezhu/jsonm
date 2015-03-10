@@ -15,9 +15,33 @@ class BaseField(object):
         if not self.null and value is None:
             raise ValueError('should not be None')
 
+    def to_json(self, python_obj):
+        return python_obj
+
+    def to_python(self, json_obj):
+        return json_obj
+
 
 class Field(BaseField):
     """
     默认用这个就够了
     """
     pass
+
+
+class DateTimeField(BaseField):
+    """
+    datetime
+    """
+
+
+class DateField(BaseField):
+    """
+    date
+    """
+
+
+class TimeField(BaseField):
+    """
+    time
+    """

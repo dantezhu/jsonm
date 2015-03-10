@@ -9,7 +9,7 @@ class Model(object):
         for attr, field_def in self._fields_dict().items():
             setattr(self, attr, field_def.default)
 
-    def _to_json(self):
+    def to_json(self):
         """
         导出为json
         :return:
@@ -17,15 +17,16 @@ class Model(object):
         self.validate()
 
         value = dict()
-        for attr in self._fields_dict().keys():
-            value[attr] = getattr(self, attr, None)
+        for attr, field_def in self._fields_dict().items():
+            json_value = field_def.to_json(getattr(self, attr, None))
+            value[attr] = json_value
 
         return dict(
             __class__=self.__class__.__name__,
             __value__=value
         )
 
-    def _from_json(self, json_str):
+    def from_json(self, json_str):
         """
         从json解析
         :param json_str:
@@ -34,8 +35,9 @@ class Model(object):
 
         json_value = json_str['__value__']
 
-        for attr in self._fields_dict().keys():
-            setattr(self, attr, json_value.get(attr))
+        for attr, field_def in self._fields_dict().items():
+            python_value = field_def.to_python(json_value.get(attr))
+            setattr(self, attr, python_value)
 
     def _fields_dict(self):
         """

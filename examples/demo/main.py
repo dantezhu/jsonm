@@ -14,7 +14,7 @@ def main():
     register_models((Desk, Player))
 
     desk = Desk(2)
-    desk.current_uin = None
+    desk.current_uin = 1
     desk.players[0] = Player(0, 'dante0')
     desk.players[1] = Player(1, 'dante1')
     desk.players[2] = Player(2, 'dante2')
