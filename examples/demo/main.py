@@ -11,13 +11,29 @@ from redis import StrictRedis
 rds = StrictRedis()
 
 
-def main():
-    register_models((Desk, Player))
+def datetime_to_json(python_object):
+    format = '%Y-%m-%d %H:%M:%S.%f'
+    return dict(
+        __class__=python_object.__class__.__name__,
+        __value__=python_object.strftime(format),
+    )
 
-    desk = Desk(5)
+
+def datetime_from_json(json_object):
+    json_value = json_object['__value__']
+    format = '%Y-%m-%d %H:%M:%S.%f'
+    return datetime.datetime.strptime(json_value, format)
+
+
+def main():
+    register_models((Desk, Player, dict(
+        type=datetime.datetime,
+        to_json=datetime_to_json,
+        from_json=datetime_from_json,
+    )))
+
+    desk = Desk(7)
     desk.current_uin = 1
-    desk.date = datetime.datetime.now().date()
-    desk.time = datetime.datetime.now().time()
     desk.players[0] = Player(0, 'dante0')
     desk.players[1] = Player(1, 'dante1')
     desk.players[2] = Player(2, 'dante2')
@@ -28,7 +44,7 @@ def main():
 
     desk.save(rds)
 
-    desk = Desk.load(rds, 5)
+    desk = Desk.load(rds, 7)
 
     print 'desk:', desk
 

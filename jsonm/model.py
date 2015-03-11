@@ -17,27 +17,25 @@ class Model(object):
         self.validate()
 
         value = dict()
-        for attr, field_def in self._fields_dict().items():
-            json_value = field_def.to_json(getattr(self, attr, None))
-            value[attr] = json_value
+        for attr in self._fields_dict().keys():
+            value[attr] = getattr(self, attr, None)
 
         return dict(
             __class__=self.__class__.__name__,
             __value__=value
         )
 
-    def from_json(self, json_str):
+    def from_json(self, json_object):
         """
         从json解析
-        :param json_str:
+        :param json_object:
         :return:
         """
 
-        json_value = json_str['__value__']
+        json_value = json_object['__value__']
 
-        for attr, field_def in self._fields_dict().items():
-            python_value = field_def.to_python(json_value.get(attr))
-            setattr(self, attr, python_value)
+        for attr in self._fields_dict().keys():
+            setattr(self, attr, json_value.get(attr))
 
     def _fields_dict(self):
         """

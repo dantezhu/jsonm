@@ -8,8 +8,13 @@ defined_models = dict()
 
 
 def custom_dumps(python_object):
-    if isinstance(python_object, tuple(defined_models.values())):
-        return python_object.to_json()
+    if type(python_object).__name__ in defined_models:
+        model = defined_models[type(python_object).__name__]
+
+        if isinstance(model, dict):
+            return model['to_json'](python_object)
+        else:
+            return python_object.to_json()
 
     # print python_object
     raise TypeError(repr(python_object) + ' is not JSON serializable')
@@ -17,9 +22,13 @@ def custom_dumps(python_object):
 
 def custom_loads(json_object):
     if '__class__' in json_object:
-        obj = defined_models[json_object['__class__']]()
-        obj.from_json(json_object)
-        return obj
+        model = defined_models[json_object['__class__']]
+        if isinstance(model, dict):
+            return model['from_json'](json_object)
+        else:
+            obj = model()
+            obj.from_json(json_object)
+            return obj
 
     return json_object
 
@@ -41,6 +50,19 @@ def json_loads(*args, **kwargs):
 
 
 def register_models(models):
+    """
+    注册models
+    :param models:
+        model可以为两种类型:
+            1. 自定义类，比如Desk，这种可以自己内部实现to_json 和 from_json 的。
+            2. 内置类，比如datetime，这种我们没法修改其内部。
+                {
+                    'type': datetime,
+                    'to_json': xxx,
+                    'from_json': yyy,
+                }
+        :return:
+    """
     defined_models.update(
-        dict([(model.__name__, model) for model in models])
+        dict([(model['type'].__name__ if isinstance(model, dict) else model.__name__, model) for model in models])
     )
