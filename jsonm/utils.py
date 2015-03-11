@@ -8,8 +8,8 @@ defined_models = dict()
 
 
 def custom_dumps(python_object):
-    if type(python_object).__name__ in defined_models:
-        model = defined_models[type(python_object).__name__]
+    if python_object.__class__.__name__ in defined_models:
+        model = defined_models[python_object.__class__.__name__]
 
         if isinstance(model, dict):
             return model['to_json'](python_object)
