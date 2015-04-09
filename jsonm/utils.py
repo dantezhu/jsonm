@@ -2,7 +2,6 @@
 
 import json
 
-
 # 被定义过的models
 defined_models = dict()
 
@@ -22,13 +21,14 @@ def custom_dumps(python_object):
 
 def custom_loads(json_object):
     if '__class__' in json_object:
-        model = defined_models[json_object['__class__']]
-        if isinstance(model, dict):
-            return model['from_json'](json_object)
-        else:
-            obj = model()
-            obj.from_json(json_object)
-            return obj
+        model = defined_models.get(json_object['__class__'])
+        if model is not None:
+            if isinstance(model, dict):
+                return model['from_json'](json_object)
+            else:
+                obj = model()
+                obj.from_json(json_object)
+                return obj
 
     return json_object
 
