@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 setup(
     name="jsonm",
-    version="1.0.17",
+    version="1.0.18",
     packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
     install_requires=[],
     scripts=[],

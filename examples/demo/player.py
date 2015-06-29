@@ -12,3 +12,9 @@ class Player(XModel):
         super(Player, self).__init__()
         self.id = id
         self.nick = nick
+
+    def on_from_json_over(self):
+        print '%s.on_from_json_over' % self.__class__
+
+    def on_to_json_over(self):
+        print '%s.on_to_json_over' % self.__class__

@@ -33,3 +33,9 @@ class Desk(XModel):
     @current_player.setter
     def current_player(self, value):
         self.current_uin = value.id if value else -1
+
+    def on_from_json_over(self):
+        print '%s.on_from_json_over' % self.__class__
+
+    def on_to_json_over(self):
+        print '%s.on_to_json_over' % self.__class__

@@ -12,6 +12,7 @@ class Model(object):
     def to_json(self):
         """
         导出为json
+        从外层到内层
         :return:
         """
         self.validate()
@@ -19,6 +20,10 @@ class Model(object):
         value = dict()
         for attr in self._fields_dict().keys():
             value[attr] = getattr(self, attr, None)
+
+        on_to_json_over = getattr(self, 'on_to_json_over', None)
+        if callable(on_to_json_over):
+            on_to_json_over()
 
         return dict(
             __class__=self.__class__.__name__,
@@ -28,6 +33,7 @@ class Model(object):
     def from_json(self, json_object):
         """
         从json解析
+        从内层到外层
         :param json_object:
         :return:
         """
@@ -36,6 +42,10 @@ class Model(object):
 
         for attr in self._fields_dict().keys():
             setattr(self, attr, json_value.get(attr))
+
+        on_from_json_over = getattr(self, 'on_from_json_over', None)
+        if callable(on_from_json_over):
+            on_from_json_over()
 
     def _fields_dict(self):
         """
