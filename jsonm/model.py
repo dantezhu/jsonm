@@ -41,7 +41,9 @@ class Model(object):
         json_value = json_object['__value__']
 
         for attr in self._fields_dict().keys():
-            setattr(self, attr, json_value.get(attr))
+            # 如果json里面没有这个attr，就应该保持目前的数据不变
+            if attr in json_value:
+                setattr(self, attr, json_value.get(attr))
 
         on_from_json_over = getattr(self, 'on_from_json_over', None)
         if callable(on_from_json_over):
