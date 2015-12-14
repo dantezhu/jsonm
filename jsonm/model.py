@@ -21,14 +21,14 @@ class Model(object):
         for attr in self._fields_dict().keys():
             value[attr] = getattr(self, attr, None)
 
-        on_to_json_over = getattr(self, 'on_to_json_over', None)
-        if callable(on_to_json_over):
-            on_to_json_over()
-
-        return dict(
+        json_object = dict(
             __class__=self.__class__.__name__,
             __value__=value
         )
+
+        self.on_to_json_over(json_object)
+
+        return json_object
 
     def from_json(self, json_object):
         """
@@ -45,9 +45,22 @@ class Model(object):
             if attr in json_value:
                 setattr(self, attr, json_value.get(attr))
 
-        on_from_json_over = getattr(self, 'on_from_json_over', None)
-        if callable(on_from_json_over):
-            on_from_json_over()
+        self.on_from_json_over()
+
+    def on_to_json_over(self, json_object):
+        """
+        导出为json之后的处理
+        :param json_object: 导出的json数据
+        :return:
+        """
+        pass
+
+    def on_from_json_over(self):
+        """
+        从json解析后的处理
+        :return:
+        """
+        pass
 
     def _fields_dict(self):
         """

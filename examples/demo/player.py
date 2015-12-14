@@ -16,5 +16,5 @@ class Player(XModel):
     def on_from_json_over(self):
         print '%s.on_from_json_over' % self.__class__
 
-    def on_to_json_over(self):
-        print '%s.on_to_json_over' % self.__class__
+    def on_to_json_over(self, json_value):
+        print '%s.on_to_json_over: %s' % (self.__class__, json_value)
