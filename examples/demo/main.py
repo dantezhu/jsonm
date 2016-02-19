@@ -13,8 +13,8 @@ rds = StrictRedis()
 
 
 def main():
-    register_models((Desk, Player))
     register_models(DATETIME_MODELS)
+    register_models((Desk, Player))
 
     desk = Desk(7)
     desk.current_uin = 1
