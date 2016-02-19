@@ -12,6 +12,10 @@ class Application(object):
     _defined_models = None
 
     def __init__(self):
+        """
+        初始化
+        :return:
+        """
         self._defined_models = dict()
 
     def _custom_dumps(self, python_object):
@@ -59,7 +63,7 @@ class Application(object):
         :param models:
             model可以为两种类型:
                 1. 自定义类，比如Desk，这种可以自己内部实现to_json 和 from_json 的。
-                2. 内置类，比如datetime，这种我们没法修改其内部。
+                2. 系统内置类，比如datetime，这种我们没法修改其内部。
                     {
                         'type': datetime,
                         'to_json': xxx,
@@ -70,3 +74,46 @@ class Application(object):
         self._defined_models.update(
             dict([(model['type'].__name__ if isinstance(model, dict) else model.__name__, model) for model in models])
         )
+
+    def register_default_models(self):
+        """
+        注册默认支持的序列化类型，主要是日期和时间
+        :return:
+        """
+        import datetime
+
+        def datetime_to_json(python_object):
+            fmt = '%Y-%m-%d %H:%M:%S.%f'
+            return dict(
+                __class__=python_object.__class__.__name__,
+                __value__=python_object.strftime(fmt),
+            )
+
+        def datetime_from_json(json_object):
+            json_value = json_object['__value__']
+            fmt = '%Y-%m-%d %H:%M:%S.%f'
+            return datetime.datetime.strptime(json_value, fmt)
+
+        def date_to_json(python_object):
+            fmt = '%Y-%m-%d'
+            return dict(
+                __class__=python_object.__class__.__name__,
+                __value__=python_object.strftime(fmt),
+            )
+
+        def date_from_json(json_object):
+            json_value = json_object['__value__']
+            fmt = '%Y-%m-%d'
+            return datetime.datetime.strptime(json_value, fmt).date()
+
+        self.register_models((
+            dict(
+                type=datetime.datetime,
+                to_json=datetime_to_json,
+                from_json=datetime_from_json,
+            ), dict(
+                type=datetime.date,
+                to_json=date_to_json,
+                from_json=date_from_json,
+            )
+        ))
