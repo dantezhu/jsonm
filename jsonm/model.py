@@ -7,7 +7,7 @@ from .vals import default_app
 class Model(object):
 
     # 默认
-    __jsonm_app = default_app
+    __jsonm_app__ = default_app
 
     def __init__(self):
         for attr, field_def in self._fields_dict().items():
@@ -94,4 +94,4 @@ class Model(object):
                 raise ValueError('%s.%s validate fail. %s' % (self.__class__.__name__, attr, e.message))
 
     def __str__(self):
-        return self.__jsonm_app.json_dumps(self, indent=4)
+        return self.__jsonm_app__.json_dumps(self, indent=4)
