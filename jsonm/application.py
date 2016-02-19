@@ -9,12 +9,12 @@ class Application(object):
     """
 
     # 被定义过的models
-    _defined_models = dict()
+    _defined_models = None
 
     def __init__(self):
         self._defined_models = dict()
 
-    def custom_dumps(self, python_object):
+    def _custom_dumps(self, python_object):
         if python_object.__class__.__name__ in self._defined_models:
             model = self._defined_models[python_object.__class__.__name__]
 
@@ -26,7 +26,7 @@ class Application(object):
         # print python_object
         raise TypeError(repr(python_object) + ' is not JSON serializable')
 
-    def custom_loads(self, json_object):
+    def _custom_loads(self, json_object):
         if '__class__' in json_object:
             model = self._defined_models.get(json_object['__class__'])
             if model is not None:
@@ -41,14 +41,14 @@ class Application(object):
 
     def json_dumps(self, *args, **kwargs):
         kwargs.update(dict(
-            default=self.custom_dumps
+            default=self._custom_dumps
         ))
 
         return json.dumps(*args, **kwargs)
 
     def json_loads(self, *args, **kwargs):
         kwargs.update(dict(
-            object_hook=self.custom_loads
+            object_hook=self._custom_loads
         ))
 
         return json.loads(*args, **kwargs)
