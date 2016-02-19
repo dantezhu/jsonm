@@ -12,7 +12,8 @@ class Desk(XModel):
     id = Field()
     current_uin = Field(default=-1)
     players = Field(default=[None for it in xrange(0, 5)])
-    datetime = Field(default=datetime.datetime.now)
+    begin_datetime = Field(default=datetime.datetime.now)
+    end_date = Field(default=datetime.date.today)
 
     def __init__(self, id=None):
         super(Desk, self).__init__()
