@@ -63,7 +63,7 @@ class Application(object):
         :param models:
             model可以为两种类型:
                 1. 自定义类，比如Desk，这种可以自己内部实现to_json 和 from_json 的。
-                2. 系统内置类，比如datetime，这种我们没法修改其内部。
+                2. 内置类，比如datetime，这种我们没法修改其内部。
                     {
                         'type': datetime,
                         'to_json': xxx,
