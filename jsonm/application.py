@@ -9,14 +9,14 @@ class Application(object):
     """
 
     # 被定义过的models
-    _defined_models = None
+    _models = None
 
     def __init__(self):
-        self._defined_models = dict()
+        self._models = dict()
 
     def _custom_dumps(self, python_object):
-        if python_object.__class__.__name__ in self._defined_models:
-            model = self._defined_models[python_object.__class__.__name__]
+        if python_object.__class__.__name__ in self._models:
+            model = self._models[python_object.__class__.__name__]
 
             if isinstance(model, dict):
                 return model['to_json'](python_object)
@@ -28,7 +28,7 @@ class Application(object):
 
     def _custom_loads(self, json_object):
         if '__class__' in json_object:
-            model = self._defined_models.get(json_object['__class__'])
+            model = self._models.get(json_object['__class__'])
             if model is not None:
                 if isinstance(model, dict):
                     return model['from_json'](json_object)
@@ -67,6 +67,6 @@ class Application(object):
                     }
             :return:
         """
-        self._defined_models.update(
+        self._models.update(
             dict([(model['type'].__name__ if isinstance(model, dict) else model.__name__, model) for model in models])
         )
