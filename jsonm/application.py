@@ -12,10 +12,6 @@ class Application(object):
     _defined_models = None
 
     def __init__(self):
-        """
-        初始化
-        :return:
-        """
         self._defined_models = dict()
 
     def _custom_dumps(self, python_object):
