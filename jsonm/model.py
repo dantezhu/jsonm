@@ -93,5 +93,5 @@ class Model(object):
             except Exception, e:
                 raise ValueError('%s.%s validate fail. %s' % (self.__class__.__name__, attr, e.message))
 
-    def __str__(self):
+    def __repr__(self):
         return self.__jsonm_app__.json_dumps(self, indent=4)
