@@ -9,5 +9,5 @@ setup(
     license="MIT",
     author="dantezhu",
     author_email="dantezhu@qq.com",
-    description="python object to (json + redis)",
+    description="python object to or from json",
 )

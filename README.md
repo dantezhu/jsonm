@@ -1,2 +1,2 @@
 # jsonm
-python object to (json + redis)
+python object to or from json
