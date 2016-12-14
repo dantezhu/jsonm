@@ -23,8 +23,9 @@ class Application(object):
             else:
                 return python_object.to_json()
 
-        # print python_object
-        raise TypeError(repr(python_object) + ' is not JSON serializable')
+        raise TypeError(
+            'object is not JSON serializable. object: %r, type: %s' % (python_object, type(python_object))
+        )
 
     def _custom_loads(self, json_object):
         if '__class__' in json_object:
