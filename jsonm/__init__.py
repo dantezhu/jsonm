@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__version__ = '1.0.25'
+__version__ = '1.0.27'
 
 from .application import Application
 from .fields import BaseField, Field
