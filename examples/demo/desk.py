@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
+
 from jsonm import Field
 from xmodel import XModel
 import datetime
@@ -11,7 +13,7 @@ class Desk(XModel):
 
     id = Field()
     current_uin = Field(default=-1)
-    players = Field(default=[None for it in xrange(0, 5)])
+    players = Field(default=[None for it in range(0, 5)])
     begin_datetime = Field(default=datetime.datetime.now)
     end_date = Field(default=datetime.date.today)
 
@@ -36,7 +38,7 @@ class Desk(XModel):
         self.current_uin = value.id if value else -1
 
     def on_from_json_over(self):
-        print '%s.on_from_json_over' % self.__class__
+        print('%s.on_from_json_over' % self.__class__)
 
     def on_to_json_over(self, json_value):
-        print '%s.on_to_json_over: %s' % (self.__class__, json_value)
+        print('%s.on_to_json_over: %s' % (self.__class__, json_value))
