@@ -90,7 +90,7 @@ class Model(object):
         for attr, field_def in self._fields_dict().items():
             try:
                 field_def.validate(getattr(self, attr, None))
-            except Exception, e:
+            except Exception as e:
                 raise ValueError('%s.%s validate fail. %s' % (self.__class__.__name__, attr, e.message))
 
     def __repr__(self):

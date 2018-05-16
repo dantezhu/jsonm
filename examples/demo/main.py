@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
+
 import sys
 sys.path.insert(0, '../../')
 import datetime
@@ -24,13 +26,13 @@ def main():
     desk.players[3] = Player(3, 'dante3')
     desk.players[4] = Player(4, 'dante4')
 
-    print 'desk:', desk
+    print('desk:', desk)
 
     desk.save(rds)
 
     desk = Desk.load(rds, 7)
 
-    print 'desk:', desk
+    print('desk:', desk)
 
 if __name__ == '__main__':
     main()

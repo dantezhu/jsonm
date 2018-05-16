@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
+
 import sys
 sys.path.insert(0, '../../')
 import datetime
@@ -15,11 +17,11 @@ def main():
 
     str_json = jsonm_app.json_dumps(desk, indent=4)
 
-    print str_json
+    print(str_json)
 
     desk = jsonm_app.json_loads(str_json)
 
-    print desk
+    print(desk)
 
 if __name__ == '__main__':
     main()
